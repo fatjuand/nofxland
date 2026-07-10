@@ -56,41 +56,41 @@ function AlbumCover({ band, album, id }: { band: string; album: string; id: numb
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const searchTerm = encodeURIComponent(`${band} ${album.replace(/[…()/.'!?,]/g, '').trim()}`);
-    fetch(`https://itunes.apple.com/search?term=${searchTerm}&media=music&entity=album&limit=1`)
+    const query = `${band} ${album.replace(/[…()/.'!?,\[\]]/g, '').trim()}`;
+    fetch(`/api/cover?q=${encodeURIComponent(query)}`)
       .then(res => res.json())
       .then(data => {
-        if (data.results && data.results.length > 0 && data.results[0].artworkUrl100) {
-          setImgSrc(data.results[0].artworkUrl100.replace('100x100bb', '600x600bb'));
+        if (data.url) {
+          setImgSrc(data.url);
         }
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, [band, album]);
 
-  // Always show placeholder while loading or if no image found
-  if (loading || !imgSrc) {
+  if (!loading && imgSrc) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-punk-dark-gray p-3 text-center">
-        <div className="text-5xl mb-2">{loading ? '⏳' : '💀'}</div>
-        <div className="text-[10px] text-punk-yellow/60 font-mono uppercase leading-tight">
-          {band}
-        </div>
-        <div className="text-[9px] text-punk-cream/40 font-mono mt-1 leading-tight">
-          {album}
-        </div>
-        <div className="mt-2 text-xs text-punk-yellow/30 font-mono">#{id.toString().padStart(3, '0')}</div>
-      </div>
+      <img
+        src={imgSrc}
+        alt={`${band} - ${album}`}
+        className="w-full h-full object-cover"
+        onError={() => setImgSrc(null)}
+      />
     );
   }
 
   return (
-    <img
-      src={imgSrc}
-      alt={`${band} - ${album}`}
-      className="w-full h-full object-cover"
-      onError={() => setImgSrc(null)}
-    />
+    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-punk-dark-gray to-punk-black p-4 text-center">
+      <div className="text-4xl mb-3">🎵</div>
+      <div className="text-xs text-punk-yellow font-mono uppercase leading-tight font-bold">
+        {band}
+      </div>
+      <div className="text-[10px] text-punk-cream/50 font-mono mt-1 leading-tight">
+        {album}
+      </div>
+      <div className="mt-3 w-12 h-[2px] bg-punk-yellow/30"></div>
+      <div className="mt-2 text-[10px] text-punk-yellow/20 font-mono">#{id.toString().padStart(3, '0')}</div>
+    </div>
   );
 }
 
