@@ -53,32 +53,26 @@ function SpotifyPreview({ band, album, onClose }: { band: string; album: string;
 
 function AlbumCover({ band, album, id }: { band: string; album: string; id: number }) {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Use iTunes Search API to get album artwork (free, no API key, fast CDN)
-    const searchTerm = encodeURIComponent(`${band} ${album.replace(/[…()/.'!?]/g, '').trim()}`);
+    const searchTerm = encodeURIComponent(`${band} ${album.replace(/[…()/.'!?,]/g, '').trim()}`);
     fetch(`https://itunes.apple.com/search?term=${searchTerm}&media=music&entity=album&limit=1`)
       .then(res => res.json())
       .then(data => {
-        if (data.results && data.results.length > 0) {
-          const artworkUrl = data.results[0].artworkUrl100?.replace('100x100bb', '600x600bb');
-          if (artworkUrl) {
-            setImgSrc(artworkUrl);
-          } else {
-            setFailed(true);
-          }
-        } else {
-          setFailed(true);
+        if (data.results && data.results.length > 0 && data.results[0].artworkUrl100) {
+          setImgSrc(data.results[0].artworkUrl100.replace('100x100bb', '600x600bb'));
         }
+        setLoading(false);
       })
-      .catch(() => setFailed(true));
+      .catch(() => setLoading(false));
   }, [band, album]);
 
-  if (failed || !imgSrc) {
+  // Always show placeholder while loading or if no image found
+  if (loading || !imgSrc) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center bg-punk-dark-gray p-3 text-center">
-        <div className="text-5xl mb-2">💀</div>
+        <div className="text-5xl mb-2">{loading ? '⏳' : '💀'}</div>
         <div className="text-[10px] text-punk-yellow/60 font-mono uppercase leading-tight">
           {band}
         </div>
@@ -95,7 +89,7 @@ function AlbumCover({ band, album, id }: { band: string; album: string; id: numb
       src={imgSrc}
       alt={`${band} - ${album}`}
       className="w-full h-full object-cover"
-      onError={() => setFailed(true)}
+      onError={() => setImgSrc(null)}
     />
   );
 }
@@ -313,7 +307,7 @@ export default function Home() {
             <option value="price-desc">Precio ↓</option>
           </select>
 
-          <label className="flex items-center gap-2 text-xs font-mono text-punk-cream/60 cursor-pointer">
+          <label className="flex items-center gap-2 text-xs font-mono text-punk-cream/60 cursor-pointer hidden">
             <input
               type="checkbox"
               checked={showSold}
