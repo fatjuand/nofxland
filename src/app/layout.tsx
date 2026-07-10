@@ -2,30 +2,28 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NOFXLAND | Vinilos Punk Rock — Medellín",
+  title: "NOFXLAND | Vinilos de Segunda Mano — Medellín",
   description:
-    "150+ vinilos punk rock a precio justo. NOFX, Slipknot, Ghost, Rammstein, AC/DC y más. Escucha previews. Envío en Medellín. WhatsApp directo.",
+    "150+ LPs de segunda mano. NOFX, Slipknot, Ghost, Rammstein, AC/DC, System of a Down y más. Envíos a toda Colombia y el mundo.",
   keywords: [
-    "vinilos punk rock",
-    "NOFX vinyl",
-    "discos LP Colombia",
-    "punk rock records Medellín",
-    "Fat Wreck Chords",
-    "Epitaph Records",
-    "vinyl collection",
     "vinilos segunda mano",
+    "discos LP Colombia",
+    "punk rock records",
+    "vinyl collection Medellín",
+    "NOFX vinyl",
+    "metal vinyl",
   ],
   openGraph: {
-    title: "🎸 NOFXLAND — Vinilos Punk Rock a Precio Justo",
-    description: "150+ LPs de segunda mano: NOFX, Ghost, Slipknot, Rammstein, AC/DC y más. Escucha previews de 30s. Medellín, Colombia.",
+    title: "🎸 NOFXLAND — Vinilos de Segunda Mano",
+    description: "150+ LPs: NOFX, Ghost, Slipknot, Rammstein, AC/DC y más. Medellín, Colombia. Envíos worldwide.",
     type: "website",
     locale: "es_CO",
     siteName: "NOFXLAND",
   },
   twitter: {
     card: "summary_large_image",
-    title: "🎸 NOFXLAND — Vinilos Punk Rock",
-    description: "150+ LPs punk rock a precio justo. Medellín, Colombia.",
+    title: "🎸 NOFXLAND — Vinilos de Segunda Mano",
+    description: "150+ LPs de segunda mano. Medellín, Colombia.",
   },
 };
 
