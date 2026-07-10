@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats } from '@/data/vinyl-catalog';
 import { hasSpotifyEmbed, getSpotifyEmbedUrl } from '@/data/spotify-ids';
 import type { VinylRecord } from '@/data/vinyl-catalog';
@@ -78,10 +78,30 @@ function SpotifyPreview({ band, album, catalogId, onClose }: { band: string; alb
 }
 
 function AlbumCover({ band, album, id }: { band: string; album: string; id: number }) {
-  const [hasImage, setHasImage] = useState(true);
-  const imgSrc = `/covers/${id}.jpg`;
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
 
-  if (!hasImage) {
+  useEffect(() => {
+    // Use iTunes Search API to get album artwork (free, no API key, fast CDN)
+    const searchTerm = encodeURIComponent(`${band} ${album.replace(/[…()/.'!?]/g, '').trim()}`);
+    fetch(`https://itunes.apple.com/search?term=${searchTerm}&media=music&entity=album&limit=1`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.results && data.results.length > 0) {
+          const artworkUrl = data.results[0].artworkUrl100?.replace('100x100bb', '600x600bb');
+          if (artworkUrl) {
+            setImgSrc(artworkUrl);
+          } else {
+            setFailed(true);
+          }
+        } else {
+          setFailed(true);
+        }
+      })
+      .catch(() => setFailed(true));
+  }, [band, album]);
+
+  if (failed || !imgSrc) {
     return (
       <div className="w-full h-full flex flex-col items-center justify-center bg-punk-dark-gray p-3 text-center">
         <div className="text-5xl mb-2">💀</div>
@@ -101,7 +121,7 @@ function AlbumCover({ band, album, id }: { band: string; album: string; id: numb
       src={imgSrc}
       alt={`${band} - ${album}`}
       className="w-full h-full object-cover"
-      onError={() => setHasImage(false)}
+      onError={() => setFailed(true)}
     />
   );
 }
@@ -272,16 +292,10 @@ export default function Home() {
           &quot;Dedicated to NOFX — the greatest band that ever sucked&quot;
         </p>
 
-        {/* Stats bar */}
+        {/* Stats bar - only show count */}
         <div className="mt-6 flex justify-center gap-6 text-xs font-mono relative">
           <span className="text-punk-green">
-            ● {stats.available} disponibles
-          </span>
-          <span className="text-punk-red">
-            ● {stats.sold} vendidos
-          </span>
-          <span className="text-punk-yellow">
-            ★ {formatPrice(stats.totalValue)} en stock
+            🎸 {stats.available} discos disponibles
           </span>
         </div>
 
