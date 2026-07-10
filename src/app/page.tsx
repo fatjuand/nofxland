@@ -254,9 +254,6 @@ export default function Home() {
         <p className="font-mono text-punk-cream/60 mt-2 text-sm md:text-base relative">
           LPs DE SEGUNDA MANO — PRECIO JUSTO — MEDELLÍN 🇨🇴
         </p>
-        <p className="font-mono text-punk-red text-xs mt-1 relative">
-          &quot;Dedicated to NOFX — the greatest band that ever sucked&quot;
-        </p>
 
         {/* Stats bar - only show count */}
         <div className="mt-6 flex justify-center gap-6 text-xs font-mono relative">
