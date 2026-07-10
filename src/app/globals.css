@@ -1,197 +1,118 @@
 @import "tailwindcss";
 
 @theme {
-  --color-punk-black: #0a0a0a;
-  --color-punk-yellow: #FFD700;
-  --color-punk-red: #FF0033;
-  --color-punk-cream: #F5F0E8;
-  --color-punk-gray: #1a1a1a;
-  --color-punk-dark-gray: #111111;
-  --color-punk-green: #39FF14;
+  --color-fat-black: #1a1a1a;
+  --color-fat-dark: #2a2a2a;
+  --color-fat-gray: #3d3d3d;
+  --color-fat-light-gray: #4a4a4a;
+  --color-fat-white: #ffffff;
+  --color-fat-gold: #c8a415;
+  --color-fat-red: #cc0000;
+  --color-fat-green: #25D366;
 
-  --font-punk: 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
-  --font-mono: 'Courier New', 'Courier', monospace;
-  --font-body: 'Arial', 'Helvetica', sans-serif;
-}
-
-/* Xerox grain texture overlay */
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
-}
-
-@keyframes flicker {
-  0% { opacity: 0.97; }
-  5% { opacity: 0.9; }
-  10% { opacity: 0.97; }
-  15% { opacity: 0.92; }
-  20% { opacity: 0.97; }
-  100% { opacity: 0.97; }
+  --font-fat: 'Arial Black', 'Impact', 'Haettenschweiler', sans-serif;
+  --font-body: 'Arial', 'Helvetica Neue', sans-serif;
+  --font-mono: 'Courier New', monospace;
 }
 
 @keyframes tape-wiggle {
-  0% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
-  100% { transform: rotate(-1deg); }
+  0% { transform: rotate(-0.5deg) scale(1); }
+  50% { transform: rotate(0.5deg) scale(1.01); }
+  100% { transform: rotate(-0.5deg) scale(1); }
 }
 
 @keyframes punk-slide-up {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px) rotate(-1deg); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0) rotate(0deg); 
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 body {
-  background-color: var(--color-punk-black);
-  color: var(--color-punk-cream);
+  background-color: var(--color-fat-dark);
+  color: var(--color-fat-white);
   font-family: var(--font-body);
 }
 
-/* Grain overlay for that xerox photocopy feel */
-body::after {
+/* Halftone dots texture like Fat Wreck */
+body::before {
   content: '';
   position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200%;
-  background: transparent url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E") repeat;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
   pointer-events: none;
   z-index: 9999;
-  animation: grain 8s steps(10) infinite;
 }
 
-/* Sticker/badge style for prices */
-.price-sticker {
-  background: var(--color-punk-yellow);
-  color: var(--color-punk-black);
-  transform: rotate(-3deg);
-  border: 3px solid var(--color-punk-black);
-  box-shadow: 3px 3px 0px var(--color-punk-black);
-  font-family: var(--font-punk);
-  font-weight: bold;
-  padding: 4px 12px;
-  display: inline-block;
-}
-
-/* Torn paper edge effect */
-.torn-edge {
-  clip-path: polygon(
-    0% 0%, 3% 1%, 6% 0%, 9% 2%, 12% 0%, 15% 1%, 18% 0%, 21% 2%, 
-    24% 0%, 27% 1%, 30% 0%, 33% 2%, 36% 0%, 39% 1%, 42% 0%, 45% 2%,
-    48% 0%, 51% 1%, 54% 0%, 57% 2%, 60% 0%, 63% 1%, 66% 0%, 69% 2%,
-    72% 0%, 75% 1%, 78% 0%, 81% 2%, 84% 0%, 87% 1%, 90% 0%, 93% 2%,
-    96% 0%, 100% 1%, 100% 100%, 97% 99%, 94% 100%, 91% 98%, 88% 100%, 
-    85% 99%, 82% 100%, 79% 98%, 76% 100%, 73% 99%, 70% 100%, 67% 98%,
-    64% 100%, 61% 99%, 58% 100%, 55% 98%, 52% 100%, 49% 99%, 46% 100%,
-    43% 98%, 40% 100%, 37% 99%, 34% 100%, 31% 98%, 28% 100%, 25% 99%,
-    22% 100%, 19% 98%, 16% 100%, 13% 99%, 10% 100%, 7% 98%, 4% 100%, 0% 99%
-  );
-}
-
-/* Card hover - punk wiggle */
+/* Card style */
 .vinyl-card {
+  background: var(--color-fat-black);
+  border-radius: 8px;
+  overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .vinyl-card:hover {
-  transform: rotate(-1deg) scale(1.02);
-  box-shadow: 6px 6px 0px var(--color-punk-yellow);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
 }
 
-/* Punk header text with rough edges */
-.punk-title {
-  font-family: var(--font-punk);
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  text-shadow: 3px 3px 0px var(--color-punk-red), -1px -1px 0px var(--color-punk-yellow);
-}
-
-/* Scrollbar punk style */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-punk-black);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-punk-yellow);
-  border: 2px solid var(--color-punk-black);
-  border-radius: 0;
-}
-
-/* Tape label style for genre tags */
-.tape-label {
-  background: var(--color-punk-cream);
-  color: var(--color-punk-black);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border: 1px dashed var(--color-punk-black);
+/* Price tag */
+.price-sticker {
+  background: var(--color-fat-gold);
+  color: var(--color-fat-black);
+  font-family: var(--font-fat);
+  font-weight: bold;
+  padding: 6px 14px;
   display: inline-block;
-  transform: rotate(-1deg);
+  font-size: 1rem;
 }
 
-/* WhatsApp button punk style */
+/* WhatsApp button */
 .whatsapp-btn {
-  background: var(--color-punk-green);
-  color: var(--color-punk-black);
-  font-family: var(--font-punk);
+  background: var(--color-fat-green);
+  color: var(--color-fat-black);
+  font-family: var(--font-fat);
   font-weight: bold;
   text-transform: uppercase;
-  border: 3px solid var(--color-punk-black);
-  box-shadow: 4px 4px 0px var(--color-punk-black);
-  transition: all 0.1s ease;
+  padding: 10px 16px;
+  transition: all 0.15s ease;
+  border-radius: 4px;
+  font-size: 0.85rem;
 }
 
 .whatsapp-btn:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--color-punk-black);
-}
-
-.whatsapp-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0px var(--color-punk-black);
-}
-
-/* Sold overlay */
-.sold-overlay {
-  position: relative;
-}
-
-.sold-overlay::after {
-  content: 'SOLD!';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg);
-  font-family: var(--font-punk);
-  font-size: 3rem;
-  color: var(--color-punk-red);
-  border: 5px solid var(--color-punk-red);
-  padding: 5px 20px;
+  transform: scale(1.05);
   opacity: 0.9;
-  pointer-events: none;
 }
 
-/* Animation for cards entering */
+/* Punk title */
+.punk-title {
+  font-family: var(--font-fat);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  color: var(--color-fat-white);
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-fat-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-fat-gray);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fat-light-gray);
+}
+
+/* Animate cards in */
 .animate-punk-in {
-  animation: punk-slide-up 0.4s ease-out forwards;
+  animation: punk-slide-up 0.3s ease-out forwards;
 }
