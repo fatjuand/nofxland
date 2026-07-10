@@ -2,15 +2,12 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats } from '@/data/vinyl-catalog';
-import { hasSpotifyEmbed, getSpotifyEmbedUrl } from '@/data/spotify-ids';
 import type { VinylRecord } from '@/data/vinyl-catalog';
 
 const WHATSAPP_NUMBER = '573045606298';
 
-function SpotifyPreview({ band, album, catalogId, onClose }: { band: string; album: string; catalogId: number; onClose: () => void }) {
-  const embedUrl = getSpotifyEmbedUrl(catalogId);
-  
-  // YouTube search as universal fallback (everyone can use it, no account needed)
+function SpotifyPreview({ band, album, onClose }: { band: string; album: string; catalogId: number; onClose: () => void }) {
+  // YouTube search - works for everyone, no account needed
   const cleanAlbum = album
     .replace(/[…]/g, '')
     .replace(/\(.*?\)/g, '')
@@ -23,54 +20,33 @@ function SpotifyPreview({ band, album, catalogId, onClose }: { band: string; alb
       <button
         onClick={onClose}
         className="absolute -top-2 -right-2 z-10 bg-punk-red text-white w-6 h-6 flex items-center justify-center text-xs font-bold border-2 border-punk-black hover:bg-punk-yellow hover:text-punk-black"
-        aria-label="Cerrar preview"
+        aria-label="Cerrar"
       >
         ✕
       </button>
-      
-      {embedUrl ? (
-        // Real Spotify embed with 30s preview
-        <>
-          <iframe
-            src={embedUrl}
-            width="100%"
-            height="152"
-            frameBorder="0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            className="rounded-none"
-            title={`Preview: ${band} - ${album}`}
-          />
-          <div className="px-2 py-1 text-[10px] font-mono text-punk-cream/30 text-center">
-            ▶ 30s preview — Powered by Spotify
+      <a
+        href={youtubeSearchUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 p-3 hover:bg-punk-gray/50 transition-colors group"
+      >
+        <div className="w-10 h-10 bg-[#FF0000] rounded-full flex items-center justify-center flex-shrink-0">
+          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-punk-cream text-xs font-mono truncate">
+            Escuchar <span className="text-punk-yellow font-bold">{band}</span>
           </div>
-        </>
-      ) : (
-        // YouTube search link - works for everyone, no account needed
-        <a
-          href={youtubeSearchUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 p-3 hover:bg-punk-gray/50 transition-colors group"
-        >
-          <div className="w-10 h-10 bg-[#FF0000] rounded-full flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
+          <div className="text-punk-cream/50 text-[10px] font-mono truncate">
+            {album} — Escuchar en YouTube
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-punk-cream text-xs font-mono truncate">
-              Escuchar <span className="text-punk-yellow font-bold">{band}</span>
-            </div>
-            <div className="text-punk-cream/50 text-[10px] font-mono truncate">
-              {album} — YouTube
-            </div>
-          </div>
-          <div className="text-[#FF0000] text-lg group-hover:scale-110 transition-transform">
-            ▶
-          </div>
-        </a>
-      )}
+        </div>
+        <div className="text-[#FF0000] text-lg group-hover:scale-110 transition-transform">
+          ▶
+        </div>
+      </a>
     </div>
   );
 }
@@ -146,7 +122,6 @@ function WhatsAppLink({ record }: { record: VinylRecord }) {
 function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
   const isSold = record.status === 'sold';
   const [showPreview, setShowPreview] = useState(false);
-  const hasEmbed = hasSpotifyEmbed(record.id);
 
   return (
     <div
@@ -194,7 +169,7 @@ function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
         </p>
       </div>
 
-      {/* Spotify Preview */}
+      {/* YouTube Preview */}
       {showPreview && (
         <SpotifyPreview
           band={record.band}
@@ -219,10 +194,9 @@ function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
                     ? 'bg-punk-green text-punk-black border-punk-green'
                     : 'bg-transparent text-punk-green border-punk-green/50 hover:border-punk-green hover:bg-punk-green/10'
                 }`}
-                title={hasEmbed ? "Escuchar 30s preview" : "Buscar en Spotify"}
+                title="Escuchar en YouTube"
               >
                 {showPreview ? '■' : '▶'}
-                {hasEmbed && !showPreview && <span className="ml-1 text-[8px]">30s</span>}
               </button>
               <WhatsAppLink record={record} />
             </>
