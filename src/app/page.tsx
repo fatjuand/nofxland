@@ -10,8 +10,10 @@ function AlbumCover({ band, album, id }: { band: string; album: string; id: numb
   const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    const query = `${band} ${album.replace(/[…()/.'!?,\[\]]/g, '').trim()}`;
-    fetch(`/api/cover?q=${encodeURIComponent(query)}`)
+    // Search with artist in quotes for better accuracy
+    const cleanAlbum = album.replace(/[…()/.'!?,\[\]]/g, '').trim();
+    const query = `${band} ${cleanAlbum}`;
+    fetch(`/api/cover?q=${encodeURIComponent(query)}&artist=${encodeURIComponent(band)}`)
       .then(res => res.json())
       .then(data => { if (data.url) setImgSrc(data.url); })
       .catch(() => {});
@@ -29,10 +31,11 @@ function AlbumCover({ band, album, id }: { band: string; album: string; id: numb
   }
 
   return (
-    <div className="w-full aspect-square bg-fat-black flex items-center justify-center">
+    <div className="w-full aspect-square bg-gradient-to-br from-fat-black via-fat-dark to-fat-black flex items-center justify-center">
       <div className="text-center p-4">
-        <div className="text-5xl mb-2">🎵</div>
-        <div className="text-sm text-white/40 font-bold uppercase">{band}</div>
+        <div className="text-6xl mb-3 opacity-20">💿</div>
+        <div className="text-xs text-white/50 font-bold uppercase tracking-wider">{band}</div>
+        <div className="text-[10px] text-fat-gold/50 mt-1 uppercase">{album}</div>
       </div>
     </div>
   );
@@ -117,13 +120,18 @@ export default function Home() {
   const stats = useMemo(() => getCatalogStats(), []);
 
   const filtered = useMemo(() => {
-    let results = catalog.filter(v => {
-      if (search) {
-        const q = search.toLowerCase();
-        if (!v.band.toLowerCase().includes(q) && !v.album.toLowerCase().includes(q)) return false;
-      }
-      if (selectedBand !== 'all' && v.band !== selectedBand) return false;
+    let results = [...catalog].filter(v => {
+      // Never show sold items
       if (v.status === 'sold') return false;
+      // Band filter (dropdown)
+      if (selectedBand !== 'all' && v.band !== selectedBand) return false;
+      // Search filter (text input)
+      if (search.trim()) {
+        const q = search.trim().toLowerCase();
+        const bandMatch = v.band.toLowerCase().includes(q);
+        const albumMatch = v.album.toLowerCase().includes(q);
+        if (!bandMatch && !albumMatch) return false;
+      }
       return true;
     });
 
