@@ -124,7 +124,7 @@ body::after {
 
 /* Scrollbar punk style */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -134,6 +134,7 @@ body::after {
 ::-webkit-scrollbar-thumb {
   background: var(--color-punk-yellow);
   border: 2px solid var(--color-punk-black);
+  border-radius: 0;
 }
 
 /* Tape label style for genre tags */
