@@ -3,8 +3,39 @@
 import { useState, useMemo } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats, getGenres } from '@/data/vinyl-catalog';
 import type { VinylRecord } from '@/data/vinyl-catalog';
+import coverUrls from '@/data/cover-urls.json';
 
 const WHATSAPP_NUMBER = '573045606298';
+
+const coverUrlMap = coverUrls as Record<string, string | null>;
+
+function AlbumCover({ record }: { record: VinylRecord }) {
+  const url = coverUrlMap[String(record.id)];
+
+  if (url) {
+    return (
+      <div className="aspect-square w-full overflow-hidden bg-nofx-gray">
+        <img
+          src={url}
+          alt={`${record.band} — ${record.album}`}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  // Skull placeholder when no cover is available
+  return (
+    <div className="aspect-square w-full overflow-hidden bg-nofx-gray flex items-center justify-center">
+      <img
+        src="/skull.svg"
+        alt=""
+        className="w-16 h-16 opacity-20 invert"
+      />
+    </div>
+  );
+}
 
 function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
@@ -14,6 +45,9 @@ function VinylCard({ record }: { record: VinylRecord }) {
 
   return (
     <div className="vinyl-card">
+      {/* Album Cover */}
+      <AlbumCover record={record} />
+
       {/* Band + Album + Year */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between gap-2 mb-2">
