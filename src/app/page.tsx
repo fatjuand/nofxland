@@ -105,12 +105,14 @@ export default function Home() {
   const filtered = useMemo(() => {
     let results = [...catalog].filter(v => {
       if (v.status === 'sold') return false;
-      if (selectedBand !== 'all' && v.band !== selectedBand) return false;
-      if (selectedGenre !== 'all' && v.genre !== selectedGenre) return false;
+      // If user is typing in search, only apply text filter (ignore dropdowns)
       if (search.trim()) {
         const q = search.trim().toLowerCase();
-        if (!v.band.toLowerCase().includes(q) && !v.album.toLowerCase().includes(q)) return false;
+        return v.band.toLowerCase().includes(q) || v.album.toLowerCase().includes(q);
       }
+      // If no search text, apply dropdown filters
+      if (selectedBand !== 'all' && v.band !== selectedBand) return false;
+      if (selectedGenre !== 'all' && v.genre !== selectedGenre) return false;
       return true;
     });
 
@@ -162,7 +164,7 @@ export default function Home() {
             type="text"
             placeholder="🔍 Buscar banda o álbum..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
             className="w-full bg-nofx-gray border border-nofx-purple/50 text-white px-4 py-3 text-base rounded focus:outline-none focus:border-nofx-green placeholder:text-white/30"
           />
           <div className="flex gap-2 flex-wrap">
