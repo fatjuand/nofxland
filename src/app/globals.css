@@ -31,6 +31,61 @@
   90% { transform: translateY(1px) rotate(0deg); }
 }
 
+@keyframes glitch {
+  0% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+  20% { text-shadow: -2px 0 #ff0000, 2px 0 #00ff00; }
+  40% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; clip-path: inset(20% 0 30% 0); }
+  41% { clip-path: none; }
+  60% { text-shadow: -1px 0 #ff0000, 1px 0 #00ff00; }
+  80% { text-shadow: 3px -1px #ff0000, -3px 1px #00ff00; clip-path: inset(50% 0 10% 0); }
+  81% { clip-path: none; }
+  100% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg) translateY(0) rotate(0deg); }
+  10% { transform: skew(-2deg) translateY(-5px) rotate(-2deg); }
+  20% { transform: skew(1deg) translateY(3px) rotate(1deg); }
+  30% { transform: skew(0deg) translateY(-8px) rotate(-3deg); }
+  40% { transform: skew(-1deg) translateY(4px) rotate(2deg); }
+  50% { transform: skew(2deg) translateY(-3px) rotate(-1deg); }
+  60% { transform: skew(0deg) translateY(2px) rotate(0deg); }
+  70% { transform: skew(1deg) translateY(-5px) rotate(-2deg); }
+  80% { transform: skew(-2deg) translateY(3px) rotate(1deg); }
+  90% { transform: skew(0deg) translateY(-2px) rotate(0deg); }
+  100% { transform: skew(0deg) translateY(0) rotate(0deg); }
+}
+
+/* Glitch logo */
+.glitch-logo {
+  position: relative;
+  animation: glitch-skew 1.5s ease-in-out infinite;
+}
+
+.glitch-logo::before,
+.glitch-logo::after {
+  content: 'NOFXLAND';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.glitch-logo::before {
+  color: #ff0000;
+  animation: glitch 2s infinite;
+  clip-path: inset(0 0 65% 0);
+  left: 2px;
+}
+
+.glitch-logo::after {
+  color: #00ff00;
+  animation: glitch 2s infinite reverse;
+  clip-path: inset(65% 0 0 0);
+  left: -2px;
+}
+
 @keyframes punk-slide-up {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }

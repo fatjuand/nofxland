@@ -1,119 +1,55 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { catalog, formatPrice, getBands, getCatalogStats } from '@/data/vinyl-catalog';
+import { useState, useMemo } from 'react';
+import { catalog, formatPrice, getBands, getCatalogStats, getGenres } from '@/data/vinyl-catalog';
 import type { VinylRecord } from '@/data/vinyl-catalog';
 
 const WHATSAPP_NUMBER = '573045606298';
 
-function AlbumCover({ band, album, id }: { band: string; album: string; id: number }) {
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Search with artist in quotes for better accuracy
-    const cleanAlbum = album.replace(/[…()/.'!?,\[\]]/g, '').trim();
-    const query = `${band} ${cleanAlbum}`;
-    fetch(`/api/cover?q=${encodeURIComponent(query)}&artist=${encodeURIComponent(band)}`)
-      .then(res => res.json())
-      .then(data => { if (data.url) setImgSrc(data.url); })
-      .catch(() => {});
-  }, [band, album]);
-
-  if (imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={`${band} - ${album}`}
-        className="w-full aspect-square object-cover"
-        onError={() => setImgSrc(null)}
-      />
-    );
-  }
-
-  return (
-    <div className="w-full aspect-square bg-gradient-to-br from-fat-black via-fat-dark to-fat-black flex items-center justify-center">
-      <div className="text-center p-4">
-        <div className="text-6xl mb-3 opacity-20">💿</div>
-        <div className="text-xs text-white/50 font-bold uppercase tracking-wider">{band}</div>
-        <div className="text-[10px] text-fat-gold/50 mt-1 uppercase">{album}</div>
-      </div>
-    </div>
-  );
-}
-
-function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
-  const isSold = record.status === 'sold';
-
+function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
     `🎸 Hey! Me interesa:\n\n*${record.band}* — ${record.album}\nPrecio: ${formatPrice(record.price)}\n\n¿Disponible?`
   );
   const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(`${record.band} ${record.album} full album`)}`;
 
   return (
-    <div
-      className={`vinyl-card animate-punk-in ${isSold ? 'opacity-40 pointer-events-none' : ''}`}
-      style={{ animationDelay: `${Math.min(index * 40, 400)}ms` }}
-    >
-      {/* Cover */}
-      <div className="relative">
-        <AlbumCover band={record.band} album={record.album} id={record.id} />
-        {isSold && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/70">
-            <span className="text-3xl font-bold text-fat-red -rotate-12 border-3 border-fat-red px-3 py-1">SOLD</span>
-          </div>
-        )}
-        {/* YouTube play button overlay */}
-        {!isSold && (
+    <div className="vinyl-card">
+      {/* Band + Album + Year - clean, no photos */}
+      <div className="p-4 pb-3 border-b border-white/5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[11px] text-fat-gold/80 font-bold uppercase tracking-wider">{record.genre}</span>
+          <span className="text-[11px] text-white/30">{record.year}</span>
+        </div>
+        <h3 className="text-white text-lg font-bold mt-2 leading-tight">
+          {record.band}
+        </h3>
+        <p className="text-fat-gold text-base font-bold uppercase leading-tight mt-1">
+          {record.album}
+        </p>
+      </div>
+
+      {/* Actions - compact */}
+      <div className="p-4 pt-3 flex items-center justify-between gap-2">
+        <span className="price-sticker">{formatPrice(record.price)}</span>
+        <div className="flex items-center gap-2">
           <a
             href={youtubeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute bottom-2 right-2 w-10 h-10 bg-black/80 rounded-full flex items-center justify-center hover:bg-fat-red transition-colors"
-            title="Escuchar en YouTube"
+            className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-fat-red transition-colors"
+            title="Escuchar"
           >
-            <span className="text-white text-lg ml-0.5">▶</span>
+            <span className="text-white text-sm ml-0.5">▶</span>
           </a>
-        )}
-      </div>
-
-      {/* Info */}
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-[11px] text-fat-gold/70 font-bold uppercase">{record.genre}</span>
-          <span className="text-[11px] text-white/30">•</span>
-          <span className="text-[11px] text-white/40">{record.year}</span>
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whatsapp-btn"
+          >
+            QUIERO
+          </a>
         </div>
-        <p className="text-white text-base font-normal leading-tight">
-          {record.band}
-        </p>
-        <p className="text-fat-gold text-lg font-bold uppercase leading-tight mt-1">
-          {record.album}
-        </p>
-        <p className="text-white/50 text-xs mt-2 italic leading-snug">
-          &quot;{record.hook}&quot;
-        </p>
-
-        {/* Price + WhatsApp */}
-        {!isSold && (
-          <div className="mt-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="price-sticker">
-                {formatPrice(record.price)}
-              </span>
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="whatsapp-btn inline-flex items-center gap-2"
-              >
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-                QUIERO
-              </a>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -122,23 +58,21 @@ function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
 export default function Home() {
   const [search, setSearch] = useState('');
   const [selectedBand, setSelectedBand] = useState<string>('all');
+  const [selectedGenre, setSelectedGenre] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'band' | 'price-asc' | 'price-desc'>('band');
 
   const bands = useMemo(() => getBands(), []);
+  const genres = useMemo(() => getGenres(), []);
   const stats = useMemo(() => getCatalogStats(), []);
 
   const filtered = useMemo(() => {
     let results = [...catalog].filter(v => {
-      // Never show sold items
       if (v.status === 'sold') return false;
-      // Band filter (dropdown)
       if (selectedBand !== 'all' && v.band !== selectedBand) return false;
-      // Search filter (text input)
+      if (selectedGenre !== 'all' && v.genre !== selectedGenre) return false;
       if (search.trim()) {
         const q = search.trim().toLowerCase();
-        const bandMatch = v.band.toLowerCase().includes(q);
-        const albumMatch = v.album.toLowerCase().includes(q);
-        if (!bandMatch && !albumMatch) return false;
+        if (!v.band.toLowerCase().includes(q) && !v.album.toLowerCase().includes(q)) return false;
       }
       return true;
     });
@@ -150,67 +84,78 @@ export default function Home() {
     });
 
     return results;
-  }, [search, selectedBand, sortBy]);
+  }, [search, selectedBand, selectedGenre, sortBy]);
 
   return (
     <main className="min-h-screen">
-      {/* HEADER — Fat Wreck style: black bar */}
-      <header className="bg-fat-black py-6 px-4 text-center border-b-2 border-fat-red">
-        <h1 className="punk-title text-5xl md:text-7xl animate-[headbang_1.2s_ease-in-out_infinite]">
+      {/* HEADER — Glitch Logo */}
+      <header className="bg-fat-black py-10 px-4 text-center border-b-2 border-fat-red overflow-hidden">
+        <h1 className="punk-title text-5xl md:text-7xl glitch-logo">
           NOFXLAND
         </h1>
-        <p className="text-white/60 mt-2 text-lg font-bold">
+        <p className="text-white/50 mt-3 text-base font-bold tracking-wider">
           {stats.available} DISCOS DISPONIBLES
         </p>
       </header>
 
-      {/* FILTERS — dark bar */}
+      {/* FILTERS */}
       <section className="sticky top-0 z-50 bg-fat-black/95 backdrop-blur px-4 py-3 border-b border-fat-gray">
-        <div className="max-w-6xl mx-auto flex flex-wrap gap-3 items-center">
+        <div className="max-w-6xl mx-auto space-y-2">
           <input
             type="text"
-            placeholder="Buscar banda o álbum..."
+            placeholder="🔍 Buscar banda o álbum..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 min-w-[180px] bg-fat-dark border border-fat-gray text-white px-4 py-3 text-base rounded focus:outline-none focus:border-fat-gold placeholder:text-white/30"
+            className="w-full bg-fat-dark border border-fat-gray text-white px-4 py-3 text-base rounded focus:outline-none focus:border-fat-gold placeholder:text-white/30"
           />
-          <select
-            value={selectedBand}
-            onChange={e => setSelectedBand(e.target.value)}
-            className="bg-fat-dark border border-fat-gray text-white px-4 py-3 text-base rounded focus:outline-none focus:border-fat-gold"
-          >
-            <option value="all">Todas las bandas</option>
-            {bands.map(band => (
-              <option key={band} value={band}>{band}</option>
-            ))}
-          </select>
-          <select
-            value={sortBy}
-            onChange={e => setSortBy(e.target.value as typeof sortBy)}
-            className="bg-fat-dark border border-fat-gray text-white px-4 py-3 text-base rounded focus:outline-none focus:border-fat-gold"
-          >
-            <option value="band">A-Z</option>
-            <option value="price-asc">Precio ↑</option>
-            <option value="price-desc">Precio ↓</option>
-          </select>
-          <span className="text-fat-gold font-bold text-sm">
-            {filtered.length} discos
-          </span>
+          <div className="flex gap-2 flex-wrap">
+            <select
+              value={selectedBand}
+              onChange={e => { setSelectedBand(e.target.value); setSelectedGenre('all'); }}
+              className="flex-1 min-w-[120px] bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+            >
+              <option value="all">Todas las bandas</option>
+              {bands.map(band => (
+                <option key={band} value={band}>{band}</option>
+              ))}
+            </select>
+            <select
+              value={selectedGenre}
+              onChange={e => { setSelectedGenre(e.target.value); setSelectedBand('all'); }}
+              className="flex-1 min-w-[120px] bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+            >
+              <option value="all">Todos los géneros</option>
+              {genres.map(genre => (
+                <option key={genre} value={genre}>{genre}</option>
+              ))}
+            </select>
+            <select
+              value={sortBy}
+              onChange={e => setSortBy(e.target.value as typeof sortBy)}
+              className="bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+            >
+              <option value="band">A-Z</option>
+              <option value="price-asc">$ ↑</option>
+              <option value="price-desc">$ ↓</option>
+            </select>
+            <span className="flex items-center text-fat-gold font-bold text-sm px-2">
+              {filtered.length}
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* CATALOG GRID — 2 cols mobile, 3-4 desktop like Fat Wreck */}
-      <section className="max-w-6xl mx-auto px-4 py-8">
+      {/* CATALOG GRID */}
+      <section className="max-w-6xl mx-auto px-4 py-6">
         {filtered.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-5xl mb-4">🎸</div>
             <p className="text-white text-xl font-bold">No hay resultados</p>
-            <p className="text-white/50 mt-2">Intenta otra búsqueda</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {filtered.map((record, i) => (
-              <VinylCard key={record.id} record={record} index={i} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filtered.map(record => (
+              <VinylCard key={record.id} record={record} />
             ))}
           </div>
         )}
@@ -218,16 +163,12 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="bg-fat-black border-t border-fat-gray py-8 px-4 text-center">
-        <p className="text-white/40 text-sm">NOFXLAND — Medellín, Colombia</p>
-        <p className="text-white/30 text-xs mt-2">
-          ¿Te interesa un disco?{' '}
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-fat-green underline"
-          >
-            Escríbenos por WhatsApp
+        <p className="text-white/30 text-sm">
+          NOFXLAND — Medellín, Colombia
+        </p>
+        <p className="text-white/20 text-xs mt-2">
+          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="text-fat-green hover:underline">
+            WhatsApp: 304 560 6298
           </a>
         </p>
       </footer>
