@@ -1,46 +1,10 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats, getGenres } from '@/data/vinyl-catalog';
 import type { VinylRecord } from '@/data/vinyl-catalog';
 
 const WHATSAPP_NUMBER = '573045606298';
-
-function AlbumCover({ band, album }: { band: string; album: string }) {
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    const cleanAlbum = album.replace(/[…()/.'!?,\[\]]/g, '').trim();
-    const query = `${band} ${cleanAlbum}`;
-    fetch(`/api/cover?q=${encodeURIComponent(query)}&artist=${encodeURIComponent(band)}`)
-      .then(res => res.json())
-      .then(data => { if (data.url) setImgSrc(data.url); })
-      .catch(() => {});
-  }, [band, album]);
-
-  if (imgSrc) {
-    return (
-      <img
-        src={imgSrc}
-        alt={`${band} - ${album}`}
-        className="w-full aspect-square object-cover"
-        onError={() => setImgSrc(null)}
-      />
-    );
-  }
-
-  // Styled placeholder
-  return (
-    <div className="w-full aspect-square bg-gradient-to-br from-nofx-gray via-nofx-dark to-nofx-black flex items-center justify-center border-b border-nofx-purple/30">
-      <div className="text-center px-3">
-        <div className="w-8 h-8 mx-auto mb-2 opacity-30">
-          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
-        </div>
-        <div className="text-[10px] text-nofx-green/40 uppercase font-bold">{band}</div>
-      </div>
-    </div>
-  );
-}
 
 function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
@@ -50,9 +14,6 @@ function VinylCard({ record }: { record: VinylRecord }) {
 
   return (
     <div className="vinyl-card">
-      {/* Album cover */}
-      <AlbumCover band={record.band} album={record.album} />
-
       {/* Band + Album + Year */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between gap-2 mb-2">
@@ -127,36 +88,35 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* HEADER — Punk in Drublic Final Tour style */}
-      <header className="bg-nofx-black py-8 px-4 text-center border-b-2 border-nofx-purple relative overflow-hidden">
-        {/* Purple swoosh strokes behind */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-nofx-purple/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-          <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-nofx-purple/15 rounded-full blur-2xl translate-y-1/2 -translate-x-1/3"></div>
+      {/* HEADER — So Long and Thanks for All the Shoes style (blue sky + retro) */}
+      <header className="py-10 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #4ABFED 0%, #2A8BC7 40%, #1a1a28 100%)' }}>
+        {/* Cloud-like shapes */}
+        <div className="absolute top-8 left-[10%] w-20 h-8 bg-white/10 rounded-full blur-md"></div>
+        <div className="absolute top-12 right-[15%] w-16 h-6 bg-white/8 rounded-full blur-md"></div>
+        <div className="absolute top-6 right-[40%] w-12 h-5 bg-white/6 rounded-full blur-sm"></div>
+
+        {/* Skulls */}
+        <div className="absolute top-3 left-3 w-8 h-8 skull-decoration opacity-30">
+          <img src="/skull.svg" alt="" className="w-full h-full invert" />
+        </div>
+        <div className="absolute top-3 right-3 w-8 h-8 skull-decoration opacity-30" style={{ animationDelay: '1.5s' }}>
+          <img src="/skull.svg" alt="" className="w-full h-full invert" />
         </div>
 
-        {/* Skull decorations - punk style SVG */}
-        <div className="absolute top-4 left-4 w-10 h-10 skull-decoration opacity-40 text-nofx-green">
-          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
-        </div>
-        <div className="absolute top-4 right-4 w-10 h-10 skull-decoration opacity-40 text-nofx-green" style={{ animationDelay: '1.5s' }}>
-          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
-        </div>
-
-        {/* Main logo - NOFX in their style + LAND */}
+        {/* Logo */}
         <div className="relative z-10">
-          <h1 className="glitch-logo text-6xl md:text-8xl tracking-tight" style={{ fontFamily: "'Permanent Marker', 'Impact', cursive" }}>
+          <h1 className="glitch-logo text-6xl md:text-8xl tracking-tight" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             NOFX
           </h1>
-          <span className="text-nofx-pink text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1" style={{ fontFamily: "'Permanent Marker', cursive" }}>
+          <span className="text-white text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1 drop-shadow-lg" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             LAND
           </span>
         </div>
-        <p className="text-nofx-white/60 mt-4 text-sm tracking-wider uppercase relative z-10">
+        <p className="text-white/80 mt-4 text-sm tracking-wider relative z-10">
           Vinilos de segunda mano — Medellín
         </p>
-        <p className="text-nofx-green/70 mt-1 text-base font-bold relative z-10">
-          {stats.available} discos
+        <p className="text-white font-bold mt-1 text-lg relative z-10">
+          {stats.available} discos disponibles
         </p>
       </header>
 

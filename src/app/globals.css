@@ -131,18 +131,18 @@ body::before {
   border-radius: 3px;
 }
 
-/* WhatsApp button */
+/* WhatsApp button - HIGH CONTRAST */
 .whatsapp-btn {
-  background: var(--color-nofx-pink);
-  color: var(--color-nofx-black);
-  font-family: var(--font-punk);
-  font-weight: bold;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 800;
   text-transform: uppercase;
-  padding: 8px 14px;
-  border-radius: 3px;
+  padding: 8px 16px;
+  border-radius: 4px;
   font-size: 0.8rem;
   transition: all 0.15s ease;
   white-space: nowrap;
+  letter-spacing: 0.5px;
 }
 
 .whatsapp-btn:hover {
