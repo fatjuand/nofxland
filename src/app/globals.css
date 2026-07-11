@@ -1,185 +1,141 @@
 @import "tailwindcss";
 
 @theme {
-  --color-fat-black: #1a1a1a;
-  --color-fat-dark: #2a2a2a;
-  --color-fat-gray: #3d3d3d;
-  --color-fat-light-gray: #4a4a4a;
-  --color-fat-white: #ffffff;
-  --color-fat-gold: #c8a415;
-  --color-fat-red: #cc0000;
-  --color-fat-green: #25D366;
+  --color-nofx-black: #0d0d0d;
+  --color-nofx-dark: #1a1a2e;
+  --color-nofx-green: #7FFF00;
+  --color-nofx-purple: #6B2FA0;
+  --color-nofx-purple-dark: #3d1d6b;
+  --color-nofx-pink: #FF69B4;
+  --color-nofx-orange: #E8843C;
+  --color-nofx-white: #f0f0f0;
+  --color-nofx-gray: #2a2a3e;
 
-  --font-fat: 'Arial Black', 'Impact', 'Haettenschweiler', sans-serif;
+  --font-punk: 'Impact', 'Arial Black', 'Haettenschweiler', sans-serif;
   --font-body: 'Arial', 'Helvetica Neue', sans-serif;
-  --font-mono: 'Courier New', monospace;
-}
-
-@keyframes tape-wiggle {
-  0% { transform: rotate(-0.5deg) scale(1); }
-  50% { transform: rotate(0.5deg) scale(1.01); }
-  100% { transform: rotate(-0.5deg) scale(1); }
-}
-
-@keyframes headbang {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  15% { transform: translateY(-8px) rotate(-3deg); }
-  30% { transform: translateY(4px) rotate(2deg); }
-  45% { transform: translateY(-5px) rotate(-2deg); }
-  60% { transform: translateY(3px) rotate(1deg); }
-  75% { transform: translateY(-3px) rotate(-1deg); }
-  90% { transform: translateY(1px) rotate(0deg); }
-}
-
-@keyframes glitch {
-  0% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
-  20% { text-shadow: -2px 0 #ff0000, 2px 0 #00ff00; }
-  40% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; clip-path: inset(20% 0 30% 0); }
-  41% { clip-path: none; }
-  60% { text-shadow: -1px 0 #ff0000, 1px 0 #00ff00; }
-  80% { text-shadow: 3px -1px #ff0000, -3px 1px #00ff00; clip-path: inset(50% 0 10% 0); }
-  81% { clip-path: none; }
-  100% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
 }
 
 @keyframes glitch-skew {
-  0% { transform: skew(0deg) translateY(0) rotate(0deg); }
-  10% { transform: skew(-2deg) translateY(-5px) rotate(-2deg); }
-  20% { transform: skew(1deg) translateY(3px) rotate(1deg); }
-  30% { transform: skew(0deg) translateY(-8px) rotate(-3deg); }
-  40% { transform: skew(-1deg) translateY(4px) rotate(2deg); }
-  50% { transform: skew(2deg) translateY(-3px) rotate(-1deg); }
-  60% { transform: skew(0deg) translateY(2px) rotate(0deg); }
-  70% { transform: skew(1deg) translateY(-5px) rotate(-2deg); }
-  80% { transform: skew(-2deg) translateY(3px) rotate(1deg); }
-  90% { transform: skew(0deg) translateY(-2px) rotate(0deg); }
-  100% { transform: skew(0deg) translateY(0) rotate(0deg); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  10% { transform: translateY(-6px) rotate(-2deg) skewX(-1deg); }
+  20% { transform: translateY(3px) rotate(1deg) skewX(1deg); }
+  30% { transform: translateY(-8px) rotate(-3deg); }
+  40% { transform: translateY(4px) rotate(2deg) skewX(-2deg); }
+  50% { transform: translateY(-4px) rotate(0deg); }
+  60% { transform: translateY(2px) rotate(-1deg) skewX(1deg); }
+  70% { transform: translateY(-6px) rotate(2deg); }
+  80% { transform: translateY(3px) rotate(-1deg); }
+  90% { transform: translateY(-2px) rotate(1deg) skewX(-1deg); }
 }
 
-/* Glitch logo */
-.glitch-logo {
-  position: relative;
-  animation: glitch-skew 1.5s ease-in-out infinite;
+@keyframes glitch-color {
+  0%, 100% { text-shadow: 2px 0 var(--color-nofx-purple), -2px 0 var(--color-nofx-pink); }
+  25% { text-shadow: -3px 2px var(--color-nofx-purple), 3px -1px var(--color-nofx-pink); }
+  50% { text-shadow: 3px -2px var(--color-nofx-purple), -2px 2px var(--color-nofx-pink); }
+  75% { text-shadow: -2px 1px var(--color-nofx-purple), 2px -2px var(--color-nofx-pink); }
 }
 
-.glitch-logo::before,
-.glitch-logo::after {
-  content: 'NOFXLAND';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
+@keyframes float-skull {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-8px) rotate(5deg); }
 }
 
-.glitch-logo::before {
-  color: #ff0000;
-  animation: glitch 2s infinite;
-  clip-path: inset(0 0 65% 0);
-  left: 2px;
+@keyframes purple-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 }
 
-.glitch-logo::after {
-  color: #00ff00;
-  animation: glitch 2s infinite reverse;
-  clip-path: inset(65% 0 0 0);
-  left: -2px;
-}
-
-@keyframes punk-slide-up {
-  from { opacity: 0; transform: translateY(15px); }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 body {
-  background-color: var(--color-fat-dark);
-  color: var(--color-fat-white);
+  background-color: var(--color-nofx-black);
+  color: var(--color-nofx-white);
   font-family: var(--font-body);
 }
 
-/* Halftone dots texture like Fat Wreck */
+/* Purple swoosh background like the tour poster */
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 4px 4px;
+  top: 0;
+  right: -20%;
+  width: 60%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, var(--color-nofx-purple-dark) 0%, transparent 70%);
+  opacity: 0.4;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
+  animation: purple-pulse 8s ease-in-out infinite;
+}
+
+/* Glitch logo */
+.glitch-logo {
+  font-family: var(--font-punk);
+  color: var(--color-nofx-green);
+  text-transform: uppercase;
+  position: relative;
+  animation: glitch-skew 1.8s ease-in-out infinite, glitch-color 2s ease-in-out infinite;
+  letter-spacing: -2px;
 }
 
 /* Card style */
 .vinyl-card {
-  background: var(--color-fat-black);
-  border-radius: 8px;
+  background: var(--color-nofx-gray);
+  border: 1px solid var(--color-nofx-purple);
+  border-radius: 6px;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  animation: slide-up 0.3s ease-out forwards;
 }
 
 .vinyl-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  transform: translateY(-3px);
+  border-color: var(--color-nofx-green);
+  box-shadow: 0 4px 20px rgba(127, 255, 0, 0.15);
 }
 
-/* Price tag */
+/* Price */
 .price-sticker {
-  background: var(--color-fat-gold);
-  color: var(--color-fat-black);
-  font-family: var(--font-fat);
+  background: var(--color-nofx-green);
+  color: var(--color-nofx-black);
+  font-family: var(--font-punk);
   font-weight: bold;
-  padding: 5px 10px;
+  padding: 5px 12px;
   display: inline-block;
   font-size: 0.85rem;
-  white-space: nowrap;
+  border-radius: 3px;
 }
 
 /* WhatsApp button */
 .whatsapp-btn {
-  background: var(--color-fat-green);
-  color: var(--color-fat-black);
-  font-family: var(--font-fat);
+  background: var(--color-nofx-pink);
+  color: var(--color-nofx-black);
+  font-family: var(--font-punk);
   font-weight: bold;
   text-transform: uppercase;
-  padding: 8px 12px;
+  padding: 8px 14px;
+  border-radius: 3px;
+  font-size: 0.8rem;
   transition: all 0.15s ease;
-  border-radius: 4px;
-  font-size: 0.75rem;
   white-space: nowrap;
 }
 
 .whatsapp-btn:hover {
+  background: var(--color-nofx-green);
   transform: scale(1.05);
-  opacity: 0.9;
-}
-
-/* Punk title */
-.punk-title {
-  font-family: var(--font-fat);
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  color: var(--color-fat-white);
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-nofx-black); }
+::-webkit-scrollbar-thumb { background: var(--color-nofx-purple); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-nofx-green); }
 
-::-webkit-scrollbar-track {
-  background: var(--color-fat-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-fat-gray);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-fat-light-gray);
-}
-
-/* Animate cards in */
-.animate-punk-in {
-  animation: punk-slide-up 0.3s ease-out forwards;
+/* Skull decoration */
+.skull-decoration {
+  animation: float-skull 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px var(--color-nofx-green));
 }

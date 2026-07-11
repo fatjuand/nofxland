@@ -14,29 +14,29 @@ function VinylCard({ record }: { record: VinylRecord }) {
 
   return (
     <div className="vinyl-card">
-      {/* Band + Album + Year - clean, no photos */}
-      <div className="p-4 pb-3 border-b border-white/5">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] text-fat-gold/80 font-bold uppercase tracking-wider">{record.genre}</span>
-          <span className="text-[11px] text-white/30">{record.year}</span>
+      {/* Band + Album + Year - Punk in Drublic style */}
+      <div className="p-4 pb-3">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <span className="text-[11px] text-nofx-pink font-bold uppercase tracking-wider">{record.genre}</span>
+          <span className="text-[11px] text-nofx-green/50">{record.year}</span>
         </div>
-        <h3 className="text-white text-lg font-bold mt-2 leading-tight">
+        <h3 className="text-nofx-green text-lg font-bold leading-tight">
           {record.band}
         </h3>
-        <p className="text-fat-gold text-base font-bold uppercase leading-tight mt-1">
+        <p className="text-white text-base uppercase leading-tight mt-1 font-bold">
           {record.album}
         </p>
       </div>
 
-      {/* Actions - compact */}
-      <div className="p-4 pt-3 flex items-center justify-between gap-2">
+      {/* Actions */}
+      <div className="p-4 pt-0 flex items-center justify-between gap-2">
         <span className="price-sticker">{formatPrice(record.price)}</span>
         <div className="flex items-center gap-2">
           <a
             href={youtubeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-fat-red transition-colors"
+            className="w-9 h-9 bg-nofx-purple/50 rounded-full flex items-center justify-center hover:bg-nofx-green transition-colors"
             title="Escuchar"
           >
             <span className="text-white text-sm ml-0.5">▶</span>
@@ -88,31 +88,45 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* HEADER — Glitch Logo */}
-      <header className="bg-fat-black py-10 px-4 text-center border-b-2 border-fat-red overflow-hidden">
-        <h1 className="punk-title text-5xl md:text-7xl glitch-logo">
+      {/* HEADER — Punk in Drublic Final Tour style */}
+      <header className="bg-nofx-black py-8 px-4 text-center border-b-2 border-nofx-purple relative overflow-hidden">
+        {/* Purple swoosh strokes behind */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-nofx-purple/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+          <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-nofx-purple/15 rounded-full blur-2xl translate-y-1/2 -translate-x-1/3"></div>
+        </div>
+
+        {/* Skull decorations */}
+        <div className="absolute top-4 left-4 text-3xl skull-decoration opacity-60">💀</div>
+        <div className="absolute top-4 right-4 text-3xl skull-decoration opacity-60" style={{ animationDelay: '1s' }}>💀</div>
+
+        {/* Main logo */}
+        <h1 className="glitch-logo text-6xl md:text-8xl relative z-10">
           NOFXLAND
         </h1>
-        <p className="text-white/50 mt-3 text-base font-bold tracking-wider">
-          {stats.available} DISCOS DISPONIBLES
+        <p className="text-nofx-pink mt-3 text-sm md:text-base font-bold tracking-widest uppercase relative z-10">
+          Vinilos de segunda mano — Medellín
+        </p>
+        <p className="text-nofx-green/70 mt-2 text-lg font-bold relative z-10">
+          {stats.available} discos
         </p>
       </header>
 
       {/* FILTERS */}
-      <section className="sticky top-0 z-50 bg-fat-black/95 backdrop-blur px-4 py-3 border-b border-fat-gray">
+      <section className="sticky top-0 z-50 bg-nofx-black/95 backdrop-blur px-4 py-3 border-b border-nofx-purple/50">
         <div className="max-w-6xl mx-auto space-y-2">
           <input
             type="text"
             placeholder="🔍 Buscar banda o álbum..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-fat-dark border border-fat-gray text-white px-4 py-3 text-base rounded focus:outline-none focus:border-fat-gold placeholder:text-white/30"
+            className="w-full bg-nofx-gray border border-nofx-purple/50 text-white px-4 py-3 text-base rounded focus:outline-none focus:border-nofx-green placeholder:text-white/30"
           />
           <div className="flex gap-2 flex-wrap">
             <select
               value={selectedBand}
               onChange={e => { setSelectedBand(e.target.value); setSelectedGenre('all'); }}
-              className="flex-1 min-w-[120px] bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+              className="flex-1 min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
             >
               <option value="all">Todas las bandas</option>
               {bands.map(band => (
@@ -122,7 +136,7 @@ export default function Home() {
             <select
               value={selectedGenre}
               onChange={e => { setSelectedGenre(e.target.value); setSelectedBand('all'); }}
-              className="flex-1 min-w-[120px] bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+              className="flex-1 min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
             >
               <option value="all">Todos los géneros</option>
               {genres.map(genre => (
@@ -132,13 +146,13 @@ export default function Home() {
             <select
               value={sortBy}
               onChange={e => setSortBy(e.target.value as typeof sortBy)}
-              className="bg-fat-dark border border-fat-gray text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-fat-gold"
+              className="bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
             >
               <option value="band">A-Z</option>
               <option value="price-asc">$ ↑</option>
               <option value="price-desc">$ ↓</option>
             </select>
-            <span className="flex items-center text-fat-gold font-bold text-sm px-2">
+            <span className="flex items-center text-nofx-green font-bold text-sm px-2">
               {filtered.length}
             </span>
           </div>
@@ -162,12 +176,13 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-fat-black border-t border-fat-gray py-8 px-4 text-center">
-        <p className="text-white/30 text-sm">
+      <footer className="bg-nofx-black border-t border-nofx-purple py-8 px-4 text-center relative">
+        <div className="text-3xl mb-3 skull-decoration inline-block">💀</div>
+        <p className="text-nofx-green/50 text-sm font-bold">
           NOFXLAND — Medellín, Colombia
         </p>
-        <p className="text-white/20 text-xs mt-2">
-          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="text-fat-green hover:underline">
+        <p className="text-nofx-pink/40 text-xs mt-2">
+          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="hover:text-nofx-pink">
             WhatsApp: 304 560 6298
           </a>
         </p>
