@@ -106,7 +106,7 @@ export default function Home() {
     let results = [...catalog].filter(v => {
       if (v.status === 'sold') return false;
       // If user is typing in search, only apply text filter (ignore dropdowns)
-      if (search.trim()) {
+      if (search.trim() && search.trim().toLowerCase() !== 'todas' && search.trim().toLowerCase() !== 'todos') {
         const q = search.trim().toLowerCase();
         return v.band.toLowerCase().includes(q) || v.album.toLowerCase().includes(q);
       }
@@ -165,10 +165,13 @@ export default function Home() {
             <div className="flex items-center bg-white/95 rounded-2xl px-4 py-3 gap-3 shadow-lg">
               <span className="text-lg text-gray-400">🔍</span>
               <input
-                type="text"
+                type="search"
                 placeholder="Buscar banda o álbum..."
                 value={search}
                 onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
                 className="flex-1 bg-transparent text-black text-base outline-none placeholder:text-gray-400 min-w-0"
               />
               {search && (
