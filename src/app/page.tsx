@@ -78,11 +78,19 @@ function VinylCard({ record, index }: { record: VinylRecord; index: number }) {
 
       {/* Info */}
       <div className="p-4">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-[11px] text-fat-gold/70 font-bold uppercase">{record.genre}</span>
+          <span className="text-[11px] text-white/30">•</span>
+          <span className="text-[11px] text-white/40">{record.year}</span>
+        </div>
         <p className="text-white text-base font-normal leading-tight">
           {record.band}
         </p>
         <p className="text-fat-gold text-lg font-bold uppercase leading-tight mt-1">
           {record.album}
+        </p>
+        <p className="text-white/50 text-xs mt-2 italic leading-snug">
+          &quot;{record.hook}&quot;
         </p>
 
         {/* Price + WhatsApp */}
