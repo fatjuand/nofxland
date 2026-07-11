@@ -100,9 +100,10 @@ export default function Home() {
         <div className="absolute top-4 left-4 text-3xl skull-decoration opacity-60">💀</div>
         <div className="absolute top-4 right-4 text-3xl skull-decoration opacity-60" style={{ animationDelay: '1s' }}>💀</div>
 
-        {/* Main logo */}
-        <h1 className="glitch-logo text-6xl md:text-8xl relative z-10">
-          NOFXLAND
+        {/* Main logo - NOFX big + LAND smaller */}
+        <h1 className="relative z-10">
+          <span className="glitch-logo text-6xl md:text-8xl block">NOFX</span>
+          <span className="text-nofx-pink text-3xl md:text-4xl font-bold tracking-[0.3em] uppercase" style={{ fontFamily: 'var(--font-punk)' }}>LAND</span>
         </h1>
         <p className="text-nofx-pink mt-3 text-sm md:text-base font-bold tracking-widest uppercase relative z-10">
           Vinilos de segunda mano — Medellín
