@@ -160,45 +160,26 @@ export default function Home() {
       {/* FILTERS */}
       <section className="sticky top-0 z-50 bg-nofx-black/95 backdrop-blur px-4 py-3 border-b border-nofx-purple/50">
         <div className="max-w-6xl mx-auto space-y-2">
-          {/* Search with autocomplete chips */}
+          {/* Search with chip style */}
           <div className="relative">
-            {search.trim() ? (
-              // Show as chip when user is searching
-              <div className="flex items-center bg-white rounded-full px-3 py-2 gap-2">
-                {filtered.length > 0 && coverUrlMap[String(filtered[0].id)] && (
-                  <img
-                    src={coverUrlMap[String(filtered[0].id)] || ''}
-                    alt=""
-                    className="w-8 h-8 rounded object-cover flex-shrink-0"
-                  />
-                )}
-                <span className="text-black text-base flex-1 truncate">
-                  {filtered.length > 0 ? `${filtered[0].band} | ${filtered[0].album}` : search}
-                </span>
-                <input
-                  type="text"
-                  value={search}
-                  onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
-                  className="absolute inset-0 opacity-0 w-full"
-                  autoFocus
-                />
+            <div className="flex items-center bg-white/95 rounded-full px-4 py-2.5 gap-3 shadow-lg">
+              <span className="text-xl">🔍</span>
+              <input
+                type="text"
+                placeholder="Buscar banda o álbum..."
+                value={search}
+                onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
+                className="flex-1 bg-transparent text-black text-base outline-none placeholder:text-gray-400"
+              />
+              {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="text-gray-500 hover:text-black text-xl font-bold flex-shrink-0 px-1"
+                  className="text-gray-400 hover:text-black text-xl font-bold px-1"
                 >
                   ✕
                 </button>
-              </div>
-            ) : (
-              // Normal search input
-              <input
-                type="text"
-                placeholder="🔍 Buscar banda o álbum..."
-                value={search}
-                onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
-                className="w-full bg-nofx-gray border border-nofx-purple/50 text-white px-4 py-3 text-base rounded focus:outline-none focus:border-nofx-green placeholder:text-white/30"
-              />
-            )}
+              )}
+            </div>
           </div>
           <div className="flex gap-2 flex-wrap">
             <select
