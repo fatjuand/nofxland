@@ -128,32 +128,32 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* HEADER */}
-      <header className="py-10 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #2d1b4e 0%, #1a1028 60%, #1a1a28 100%)' }}>
+      <header className="py-4 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #2d1b4e 0%, #1a1028 60%, #1a1028 100%)' }}>
         {/* Diagonal punk stripes */}
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(127,255,0,0.3) 20px, rgba(127,255,0,0.3) 22px)' }}></div>
 
         {/* Skulls */}
-        <div className="absolute top-3 left-3 w-8 h-8 skull-decoration opacity-30">
+        <div className="absolute top-2 left-2 w-6 h-6 skull-decoration opacity-20">
           <img src="/skull.svg" alt="" className="w-full h-full invert" />
         </div>
-        <div className="absolute top-3 right-3 w-8 h-8 skull-decoration opacity-30" style={{ animationDelay: '1.5s' }}>
+        <div className="absolute top-2 right-2 w-6 h-6 skull-decoration opacity-20" style={{ animationDelay: '1.5s' }}>
           <img src="/skull.svg" alt="" className="w-full h-full invert" />
         </div>
 
-        {/* Logo */}
+        {/* Logo - compact */}
         <div className="relative z-10">
-          <h1 className="glitch-logo text-6xl md:text-8xl tracking-tight" style={{ fontFamily: "'Permanent Marker', cursive" }}>
+          <h1 className="glitch-logo text-4xl md:text-7xl tracking-tight" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             NOFX
           </h1>
-          <span className="text-nofx-pink text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1 drop-shadow-lg" style={{ fontFamily: "'Permanent Marker', cursive" }}>
+          <span className="text-nofx-pink text-lg md:text-2xl font-bold tracking-[0.4em] block" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             LAND
           </span>
         </div>
-        <p className="text-white/60 mt-4 text-sm tracking-wider relative z-10">
+        <p className="text-white/50 mt-1 text-xs tracking-wider relative z-10">
           Vinilos de segunda mano — Medellín
         </p>
-        <p className="text-nofx-green font-bold mt-1 text-lg relative z-10">
-          {stats.available} discos disponibles
+        <p className="text-nofx-green font-bold text-sm relative z-10">
+          {stats.available} discos
         </p>
       </header>
 
