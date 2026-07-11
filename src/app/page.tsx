@@ -14,16 +14,16 @@ function VinylCard({ record }: { record: VinylRecord }) {
 
   return (
     <div className="vinyl-card">
-      {/* Band + Album + Year - Punk in Drublic style */}
+      {/* Band + Album + Year */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between gap-2 mb-2">
-          <span className="text-[11px] text-nofx-pink font-bold uppercase tracking-wider">{record.genre}</span>
-          <span className="text-[11px] text-nofx-green/50">{record.year}</span>
+          <span className="text-[11px] text-nofx-pink font-semibold uppercase tracking-wider">{record.genre}</span>
+          <span className="text-[11px] text-nofx-green/40">{record.year}</span>
         </div>
-        <h3 className="text-nofx-green text-lg font-bold leading-tight">
+        <h3 className="text-nofx-green text-base font-bold leading-tight">
           {record.band}
         </h3>
-        <p className="text-white text-base uppercase leading-tight mt-1 font-bold">
+        <p className="text-white text-sm leading-tight mt-1">
           {record.album}
         </p>
       </div>
@@ -96,19 +96,27 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-nofx-purple/15 rounded-full blur-2xl translate-y-1/2 -translate-x-1/3"></div>
         </div>
 
-        {/* Skull decorations */}
-        <div className="absolute top-4 left-4 text-3xl skull-decoration opacity-60">💀</div>
-        <div className="absolute top-4 right-4 text-3xl skull-decoration opacity-60" style={{ animationDelay: '1s' }}>💀</div>
+        {/* Skull decorations - punk style SVG */}
+        <div className="absolute top-4 left-4 w-10 h-10 skull-decoration opacity-40 text-nofx-green">
+          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
+        </div>
+        <div className="absolute top-4 right-4 w-10 h-10 skull-decoration opacity-40 text-nofx-green" style={{ animationDelay: '1.5s' }}>
+          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
+        </div>
 
-        {/* Main logo - NOFX big + LAND smaller */}
-        <h1 className="relative z-10">
-          <span className="glitch-logo text-6xl md:text-8xl block">NOFX</span>
-          <span className="text-nofx-pink text-3xl md:text-4xl font-bold tracking-[0.3em] uppercase" style={{ fontFamily: 'var(--font-punk)' }}>LAND</span>
-        </h1>
-        <p className="text-nofx-pink mt-3 text-sm md:text-base font-bold tracking-widest uppercase relative z-10">
+        {/* Main logo - NOFX in their style + LAND */}
+        <div className="relative z-10">
+          <h1 className="glitch-logo text-6xl md:text-8xl tracking-tight" style={{ fontFamily: "'Permanent Marker', 'Impact', cursive" }}>
+            NOFX
+          </h1>
+          <span className="text-nofx-pink text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1" style={{ fontFamily: "'Permanent Marker', cursive" }}>
+            LAND
+          </span>
+        </div>
+        <p className="text-nofx-white/60 mt-4 text-sm tracking-wider uppercase relative z-10">
           Vinilos de segunda mano — Medellín
         </p>
-        <p className="text-nofx-green/70 mt-2 text-lg font-bold relative z-10">
+        <p className="text-nofx-green/70 mt-1 text-base font-bold relative z-10">
           {stats.available} discos
         </p>
       </header>
@@ -178,11 +186,13 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="bg-nofx-black border-t border-nofx-purple py-8 px-4 text-center relative">
-        <div className="text-3xl mb-3 skull-decoration inline-block">💀</div>
-        <p className="text-nofx-green/50 text-sm font-bold">
-          NOFXLAND — Medellín, Colombia
+        <div className="w-8 h-8 mx-auto mb-3 skull-decoration opacity-50">
+          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
+        </div>
+        <p className="text-nofx-green/40 text-sm">
+          NOFXLAND — Medellín
         </p>
-        <p className="text-nofx-pink/40 text-xs mt-2">
+        <p className="text-nofx-pink/30 text-xs mt-2">
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="hover:text-nofx-pink">
             WhatsApp: 304 560 6298
           </a>

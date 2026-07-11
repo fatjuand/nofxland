@@ -1,0 +1,15 @@
+<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+  <!-- Punk skull inspired by Crimson Ghost / Misfits style -->
+  <path d="M50 5 C25 5 10 25 10 45 C10 55 12 62 16 68 C12 72 10 78 10 82 C10 90 15 95 20 95 L25 95 C25 98 28 100 32 100 L38 100 L38 105 C38 108 40 110 43 110 L57 110 C60 110 62 108 62 105 L62 100 L68 100 C72 100 75 98 75 95 L80 95 C85 95 90 90 90 82 C90 78 88 72 84 68 C88 62 90 55 90 45 C90 25 75 5 50 5 Z"/>
+  <!-- Eyes - deep black hollows -->
+  <ellipse cx="35" cy="42" rx="10" ry="12" fill="#0d0d0d"/>
+  <ellipse cx="65" cy="42" rx="10" ry="12" fill="#0d0d0d"/>
+  <!-- Nose -->
+  <path d="M45 58 L50 65 L55 58 Z" fill="#0d0d0d"/>
+  <!-- Teeth/Jaw -->
+  <rect x="30" y="72" width="6" height="10" rx="1" fill="#0d0d0d"/>
+  <rect x="38" y="72" width="6" height="12" rx="1" fill="#0d0d0d"/>
+  <rect x="46" y="72" width="6" height="12" rx="1" fill="#0d0d0d"/>
+  <rect x="54" y="72" width="6" height="12" rx="1" fill="#0d0d0d"/>
+  <rect x="62" y="72" width="6" height="10" rx="1" fill="#0d0d0d"/>
+</svg>
