@@ -74,7 +74,7 @@ body {
       rgba(127, 255, 0, 0.02) 40px,
       rgba(127, 255, 0, 0.02) 41px
     );
-  background-color: #1a1a28;
+  background-color: #1a1028;
 }
 
 /* Punk museum wall vibe - scattered visual elements */
@@ -105,8 +105,8 @@ body::before {
 
 /* Card style */
 .vinyl-card {
-  background: var(--color-nofx-gray);
-  border: 1px solid var(--color-nofx-purple);
+  background: linear-gradient(180deg, #2a1f3d 0%, #3d2055 100%);
+  border: 1px solid rgba(127, 255, 0, 0.15);
   border-radius: 6px;
   overflow: hidden;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
