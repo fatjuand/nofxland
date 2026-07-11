@@ -1,10 +1,46 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats, getGenres } from '@/data/vinyl-catalog';
 import type { VinylRecord } from '@/data/vinyl-catalog';
 
 const WHATSAPP_NUMBER = '573045606298';
+
+function AlbumCover({ band, album }: { band: string; album: string }) {
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cleanAlbum = album.replace(/[…()/.'!?,\[\]]/g, '').trim();
+    const query = `${band} ${cleanAlbum}`;
+    fetch(`/api/cover?q=${encodeURIComponent(query)}&artist=${encodeURIComponent(band)}`)
+      .then(res => res.json())
+      .then(data => { if (data.url) setImgSrc(data.url); })
+      .catch(() => {});
+  }, [band, album]);
+
+  if (imgSrc) {
+    return (
+      <img
+        src={imgSrc}
+        alt={`${band} - ${album}`}
+        className="w-full aspect-square object-cover"
+        onError={() => setImgSrc(null)}
+      />
+    );
+  }
+
+  // Styled placeholder
+  return (
+    <div className="w-full aspect-square bg-gradient-to-br from-nofx-gray via-nofx-dark to-nofx-black flex items-center justify-center border-b border-nofx-purple/30">
+      <div className="text-center px-3">
+        <div className="w-8 h-8 mx-auto mb-2 opacity-30">
+          <img src="/skull.svg" alt="" className="w-full h-full invert brightness-200 hue-rotate-[80deg]" />
+        </div>
+        <div className="text-[10px] text-nofx-green/40 uppercase font-bold">{band}</div>
+      </div>
+    </div>
+  );
+}
 
 function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
@@ -14,6 +50,9 @@ function VinylCard({ record }: { record: VinylRecord }) {
 
   return (
     <div className="vinyl-card">
+      {/* Album cover */}
+      <AlbumCover band={record.band} album={record.album} />
+
       {/* Band + Album + Year */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between gap-2 mb-2">

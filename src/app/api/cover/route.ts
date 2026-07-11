@@ -44,27 +44,25 @@ export async function GET(request: NextRequest) {
 
 async function tryItunes(query: string, artist: string | null): Promise<string | null> {
   try {
+    // Search with just the artist + album, get more results to find exact match
     const res = await fetch(
-      `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=album&limit=3`,
+      `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=album&limit=5`,
       { signal: AbortSignal.timeout(5000) }
     );
     const data = await res.json();
-    if (data.results?.length) {
-      // If we have an artist name, try to match it
-      if (artist) {
-        const artistLower = artist.toLowerCase();
-        const match = data.results.find((r: { artistName?: string }) => 
-          r.artistName?.toLowerCase().includes(artistLower) || artistLower.includes(r.artistName?.toLowerCase() || '')
-        );
-        if (match?.artworkUrl100) {
-          return match.artworkUrl100.replace('100x100bb', '600x600bb');
-        }
-      }
-      // Fallback to first result
-      if (data.results[0]?.artworkUrl100) {
-        return data.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+    if (data.results?.length && artist) {
+      const artistLower = artist.toLowerCase().replace(/[.]/g, '');
+      // STRICT match: artist name must match closely
+      const match = data.results.find((r: { artistName?: string; collectionName?: string }) => {
+        const resultArtist = (r.artistName || '').toLowerCase().replace(/[.]/g, '');
+        // Artist must be contained in result or result contained in artist
+        return resultArtist.includes(artistLower) || artistLower.includes(resultArtist);
+      });
+      if (match?.artworkUrl100) {
+        return match.artworkUrl100.replace('100x100bb', '600x600bb');
       }
     }
+    // If no artist provided or no strict match, skip (don't return wrong image)
   } catch {}
   return null;
 }
