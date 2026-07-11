@@ -88,12 +88,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* HEADER — So Long and Thanks for All the Shoes style (blue sky + retro) */}
-      <header className="py-10 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #4ABFED 0%, #2A8BC7 40%, #1a1a28 100%)' }}>
-        {/* Cloud-like shapes */}
-        <div className="absolute top-8 left-[10%] w-20 h-8 bg-white/10 rounded-full blur-md"></div>
-        <div className="absolute top-12 right-[15%] w-16 h-6 bg-white/8 rounded-full blur-md"></div>
-        <div className="absolute top-6 right-[40%] w-12 h-5 bg-white/6 rounded-full blur-sm"></div>
+      {/* HEADER */}
+      <header className="py-10 px-4 text-center relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #2d1b4e 0%, #1a1028 60%, #1a1a28 100%)' }}>
+        {/* Diagonal punk stripes */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(127,255,0,0.3) 20px, rgba(127,255,0,0.3) 22px)' }}></div>
 
         {/* Skulls */}
         <div className="absolute top-3 left-3 w-8 h-8 skull-decoration opacity-30">
@@ -108,14 +106,14 @@ export default function Home() {
           <h1 className="glitch-logo text-6xl md:text-8xl tracking-tight" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             NOFX
           </h1>
-          <span className="text-white text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1 drop-shadow-lg" style={{ fontFamily: "'Permanent Marker', cursive" }}>
+          <span className="text-nofx-pink text-2xl md:text-3xl font-bold tracking-[0.4em] block mt-1 drop-shadow-lg" style={{ fontFamily: "'Permanent Marker', cursive" }}>
             LAND
           </span>
         </div>
-        <p className="text-white/80 mt-4 text-sm tracking-wider relative z-10">
+        <p className="text-white/60 mt-4 text-sm tracking-wider relative z-10">
           Vinilos de segunda mano — Medellín
         </p>
-        <p className="text-white font-bold mt-1 text-lg relative z-10">
+        <p className="text-nofx-green font-bold mt-1 text-lg relative z-10">
           {stats.available} discos disponibles
         </p>
       </header>
