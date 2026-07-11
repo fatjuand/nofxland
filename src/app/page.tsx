@@ -156,7 +156,7 @@ export default function Home() {
     <main className="min-h-screen">
       {/* HEADER — Fat Wreck style: black bar */}
       <header className="bg-fat-black py-6 px-4 text-center border-b-2 border-fat-red">
-        <h1 className="punk-title text-5xl md:text-7xl animate-[tape-wiggle_4s_ease-in-out_infinite]">
+        <h1 className="punk-title text-5xl md:text-7xl animate-[headbang_1.2s_ease-in-out_infinite]">
           NOFXLAND
         </h1>
         <p className="text-white/60 mt-2 text-lg font-bold">
