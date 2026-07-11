@@ -160,23 +160,24 @@ export default function Home() {
       {/* FILTERS */}
       <section className="sticky top-0 z-50 bg-nofx-black/95 backdrop-blur px-4 py-3 border-b border-nofx-purple/50">
         <div className="max-w-6xl mx-auto space-y-2">
-          {/* Search with chip style */}
+          {/* Search - iOS style with clear button */}
           <div className="relative">
-            <div className="flex items-center bg-white/95 rounded-full px-4 py-2.5 gap-3 shadow-lg">
-              <span className="text-xl">🔍</span>
+            <div className="flex items-center bg-white/95 rounded-2xl px-4 py-3 gap-3 shadow-lg">
+              <span className="text-lg text-gray-400">🔍</span>
               <input
                 type="text"
                 placeholder="Buscar banda o álbum..."
                 value={search}
                 onChange={e => { setSearch(e.target.value); setSelectedBand('all'); setSelectedGenre('all'); }}
-                className="flex-1 bg-transparent text-black text-base outline-none placeholder:text-gray-400"
+                className="flex-1 bg-transparent text-black text-base outline-none placeholder:text-gray-400 min-w-0"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="text-gray-400 hover:text-black text-xl font-bold px-1"
+                  className="w-8 h-8 flex items-center justify-center bg-gray-300 rounded-full flex-shrink-0 active:bg-gray-400 transition-colors"
+                  aria-label="Limpiar búsqueda"
                 >
-                  ✕
+                  <span className="text-gray-600 text-sm font-bold">✕</span>
                 </button>
               )}
             </div>
