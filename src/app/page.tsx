@@ -132,12 +132,12 @@ export default function Home() {
         {/* Diagonal punk stripes */}
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(127,255,0,0.3) 20px, rgba(127,255,0,0.3) 22px)' }}></div>
 
-        {/* Skulls */}
-        <div className="absolute top-2 left-2 w-6 h-6 skull-decoration opacity-20">
-          <img src="/skull.svg" alt="" className="w-full h-full invert" />
+        {/* Skulls - more visible */}
+        <div className="absolute top-2 left-2 w-8 h-8 skull-decoration opacity-70">
+          <img src="/skull.svg" alt="" className="w-full h-full" style={{ filter: 'invert(1) brightness(2) drop-shadow(0 0 4px rgba(127,255,0,0.6))' }} />
         </div>
-        <div className="absolute top-2 right-2 w-6 h-6 skull-decoration opacity-20" style={{ animationDelay: '1.5s' }}>
-          <img src="/skull.svg" alt="" className="w-full h-full invert" />
+        <div className="absolute top-2 right-2 w-8 h-8 skull-decoration opacity-70" style={{ animationDelay: '1.5s' }}>
+          <img src="/skull.svg" alt="" className="w-full h-full" style={{ filter: 'invert(1) brightness(2) drop-shadow(0 0 4px rgba(127,255,0,0.6))' }} />
         </div>
 
         {/* Logo - compact */}
