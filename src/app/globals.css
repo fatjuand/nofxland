@@ -119,16 +119,79 @@ body::before {
   box-shadow: 0 4px 20px rgba(127, 255, 0, 0.15);
 }
 
-/* Price */
+/* Price block */
+.price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  width: 100%;
+}
+
+.price-before-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.price-before-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 68, 68, 0.7);
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.price-before-amount {
+  font-size: 0.7rem;
+  color: rgba(255, 68, 68, 0.6);
+  text-decoration: line-through;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.price-now-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.price-now-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-nofx-green);
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
 .price-sticker {
   background: var(--color-nofx-green);
   color: var(--color-nofx-black);
   font-family: var(--font-punk);
   font-weight: bold;
-  padding: 5px 12px;
+  padding: 3px 10px;
   display: inline-block;
   font-size: 0.85rem;
   border-radius: 3px;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.price-discount-badge {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff6666;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* WhatsApp button - HIGH CONTRAST with logo */
@@ -137,17 +200,23 @@ body::before {
   color: #ffffff;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 10px 16px;
+  padding: 8px 12px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   transition: all 0.15s ease;
   white-space: nowrap;
   letter-spacing: 0.5px;
+  width: 100%;
 }
 
 .whatsapp-btn:hover {
   background: #128C7E;
-  transform: scale(1.05);
+  transform: scale(1.02);
+}
+
+.whatsapp-btn:active {
+  background: #075E54;
+  transform: scale(0.98);
 }
 
 /* Scrollbar */
