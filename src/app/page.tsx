@@ -66,14 +66,9 @@ function VinylCard({ record }: { record: VinylRecord }) {
       <div className="p-4 pt-0">
         {/* Price row */}
         <div className="price-block">
-          <div className="price-before-row">
-            <span className="price-before-label">ANTES</span>
-            <span className="price-before-amount">{formatPrice(record.price * 2)}</span>
-          </div>
           <div className="price-now-row">
-            <span className="price-now-label">🔥 AHORA</span>
+            <span className="price-now-label">🔥 PRECIO</span>
             <span className="price-sticker">{formatPrice(record.price)}</span>
-            <span className="price-discount-badge">-50%</span>
           </div>
         </div>
         {/* Buttons row */}
