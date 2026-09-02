@@ -16,7 +16,7 @@ export type VinylRecord = {
 // The NOFXLAND catalog — Juan David's collection
 // Prices are the final sale prices in COP.
 export const catalog: VinylRecord[] = [
-  { id: 1, band: 'A Killing Tradition', album: 'Free Wayne Henley', year: 2006, genre: 'Hardcore Punk', hook: 'Hardcore texano crudo y sin filtros', price: 50000, status: 'available' },
+  { id: 1, band: 'A Killing Tradition', album: 'Free Wayne Henley', year: 2006, genre: 'Hardcore Punk', hook: 'Hardcore texano crudo y sin filtros', price: 50000, status: 'available', listenUrl: 'https://www.youtube.com/watch?v=v1DU0v7Ccsc' },
   { id: 2, band: 'AC/DC', album: 'For Those About to Rock', year: 1981, genre: 'Hard Rock', hook: 'El cañonazo que abre todos los conciertos', price: 75000, status: 'available' },
   { id: 3, band: 'AC/DC', album: 'Dirty Deeds Done Dirt Cheap', year: 1976, genre: 'Hard Rock', hook: 'Rock sucio hecho a precio de ganga', price: 75000, status: 'available' },
   { id: 4, band: 'AC/DC', album: 'Power Up', year: 2020, genre: 'Hard Rock', hook: 'Angus Young demostrando que nunca se retira', price: 75000, status: 'available' },
