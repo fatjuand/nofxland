@@ -203,11 +203,11 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className="flex gap-2 flex-wrap">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
             <select
               value={selectedBand}
               onChange={e => { setSelectedBand(e.target.value); setSelectedGenre('all'); }}
-              className="flex-1 min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
+              className="w-full min-w-0 sm:flex-1 sm:min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green truncate"
             >
               <option value="all">Todas las bandas</option>
               {bands.map(band => (
@@ -217,25 +217,27 @@ export default function Home() {
             <select
               value={selectedGenre}
               onChange={e => { setSelectedGenre(e.target.value); setSelectedBand('all'); }}
-              className="flex-1 min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
+              className="w-full min-w-0 sm:flex-1 sm:min-w-[120px] bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green truncate"
             >
               <option value="all">Todos los géneros</option>
               {genres.map(genre => (
                 <option key={genre} value={genre}>{genre}</option>
               ))}
             </select>
-            <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value as typeof sortBy)}
-              className="bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
-            >
-              <option value="band">A-Z</option>
-              <option value="price-asc">$ ↑</option>
-              <option value="price-desc">$ ↓</option>
-            </select>
-            <span className="flex items-center text-nofx-green font-bold text-sm px-2">
-              {filtered.length}
-            </span>
+            <div className="col-span-2 flex items-center gap-2 sm:col-auto sm:contents">
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value as typeof sortBy)}
+                className="flex-1 sm:flex-none bg-nofx-gray border border-nofx-purple/50 text-white px-3 py-2 text-sm rounded focus:outline-none focus:border-nofx-green"
+              >
+                <option value="band">A-Z</option>
+                <option value="price-asc">$ ↑</option>
+                <option value="price-desc">$ ↓</option>
+              </select>
+              <span className="flex items-center justify-center text-nofx-green font-bold text-sm px-2 flex-shrink-0">
+                {filtered.length}
+              </span>
+            </div>
           </div>
         </div>
       </section>
