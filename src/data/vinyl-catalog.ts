@@ -115,7 +115,7 @@ export const catalog: VinylRecord[] = [
   { id: 100, band: 'NOFX', album: 'The Longest Line', year: 1992, genre: 'Punk Rock', hook: 'EP clásico con Linoleum original', price: 75000, status: 'available' },
   { id: 101, band: 'NOFX', album: 'Liberal Animation', year: 1988, genre: 'Punk Rock', hook: 'El debut crudo donde todo empezó', price: 75000, status: 'available' },
   { id: 102, band: 'NOFX', album: 'Half Album', year: 2024, genre: 'Punk Rock', hook: 'Las últimas grabaciones de NOFX', price: 75000, status: 'available' },
-  { id: 103, band: 'NOFX', album: "Wolves in Wolves' Clothing", year: 2006, genre: 'Punk Rock', hook: 'NOFX político y furioso post-Bush', price: 75000, status: 'available' },
+  { id: 103, band: 'NOFX', album: "Wolves in Wolves' Clothing", year: 2006, genre: 'Punk Rock', hook: 'NOFX político y furioso post-Bush', price: 75000, status: 'sold' },
   { id: 104, band: 'NOFX', album: 'Surfer', year: 2008, genre: 'Punk Rock', hook: 'EP de NOFX veloz y directo, puro Fat Wreck', price: 25000, status: 'available' },
   { id: 105, band: 'NOFX', album: 'Liza and Louise', year: 1990, genre: 'Punk Rock', hook: 'EP temprano con punk rápido y sucio', price: 25000, status: 'available' },
   { id: 106, band: 'NOFX', album: 'The P.M.R.C. Can Suck on This', year: 1989, genre: 'Punk Rock', hook: 'Contra la censura: punk en 7 pulgadas', price: 25000, status: 'available' },
