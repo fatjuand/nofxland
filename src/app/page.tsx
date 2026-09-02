@@ -4,13 +4,17 @@ import { useState, useMemo } from 'react';
 import { catalog, formatPrice, getBands, getCatalogStats, getGenres } from '@/data/vinyl-catalog';
 import type { VinylRecord } from '@/data/vinyl-catalog';
 import coverUrls from '@/data/cover-urls.json';
+import ownCovers from '@/data/own-covers.json';
 
 const WHATSAPP_NUMBER = '573045606298';
 
 const coverUrlMap = coverUrls as Record<string, string | null>;
+const ownCoverMap = ownCovers as Record<string, string>;
 
 function AlbumCover({ record }: { record: VinylRecord }) {
-  const url = coverUrlMap[String(record.id)];
+  // Priority: your own photo (public/covers/{id}.jpg) > API-fetched cover > placeholder.
+  // Own photos always match the exact physical record you're selling.
+  const url = ownCoverMap[String(record.id)] ?? coverUrlMap[String(record.id)];
 
   if (url) {
     return (

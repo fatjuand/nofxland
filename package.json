@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "covers": "node scripts/build-own-covers.mjs",
+    "prebuild": "node scripts/build-own-covers.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
