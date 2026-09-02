@@ -10,6 +10,7 @@ export type VinylRecord = {
   price: number; // COP — final sale price
   status: SaleStatus;
   soldTo?: string;
+  listenUrl?: string; // Optional curated link for the "Escuchar" button (overrides YouTube search)
 };
 
 // The NOFXLAND catalog — Juan David's collection

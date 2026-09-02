@@ -45,9 +45,11 @@ function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
     `🎸 Hey! Me interesa:\n\n*${record.band}* — ${record.album}\nPrecio: ${formatPrice(record.price)}\n\n¿Disponible?`
   );
-  // Use YouTube Music search: it only indexes official music, avoiding
-  // unrelated results (e.g. crime docs for "A Killing Tradition - Free Wayne Henley").
-  const youtubeUrl = `https://music.youtube.com/search?q=${encodeURIComponent(`${record.band} ${record.album}`)}`;
+  // Default: search YouTube by band + album (works for the vast majority).
+  // For tricky titles (e.g. "A Killing Tradition - Free Wayne Henley" surfaces
+  // true-crime content), a curated `listenUrl` in the catalog overrides the search.
+  const youtubeUrl = record.listenUrl
+    ?? `https://www.youtube.com/results?search_query=${encodeURIComponent(`${record.band} ${record.album} full album`)}`;
 
   return (
     <div className="vinyl-card">
