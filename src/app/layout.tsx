@@ -3,28 +3,30 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NOFXLAND | Vinilos de Segunda Mano — Medellín",
+  title: "NOFXLAND | Vinilos de Segunda Mano en Medellín — Precios de Oferta",
   description:
-    "150+ LPs de segunda mano. NOFX, Slipknot, Ghost, Rammstein, AC/DC, System of a Down y más. Envíos a toda Colombia y el mundo.",
+    "Colección de vinilos LP de segunda mano a precios de oferta en Medellín. Punk, metal y rock: NOFX, Slipknot, Ghost, Rammstein, AC/DC, System of a Down y más. Recogida en Medellín o envíos a toda Colombia.",
   keywords: [
-    "vinilos segunda mano",
+    "vinilos segunda mano Medellín",
+    "vinilos Medellín",
     "discos LP Colombia",
-    "punk rock records",
-    "vinyl collection Medellín",
+    "comprar vinilos Colombia",
+    "vinilos punk metal",
+    "vinilos usados Medellín",
     "NOFX vinyl",
-    "metal vinyl",
+    "coleccion vinilos venta",
   ],
   openGraph: {
-    title: "🎸 NOFXLAND — Vinilos de Segunda Mano",
-    description: "150+ LPs: NOFX, Ghost, Slipknot, Rammstein, AC/DC y más. Medellín, Colombia. Envíos worldwide.",
+    title: "🎸 NOFXLAND — Vinilos de Segunda Mano en Medellín",
+    description: "Colección de LPs a precios de oferta: NOFX, Ghost, Slipknot, Rammstein, AC/DC, System of a Down y más. Recogida en Medellín o envíos a toda Colombia. Pregunta por WhatsApp.",
     type: "website",
     locale: "es_CO",
     siteName: "NOFXLAND",
   },
   twitter: {
     card: "summary_large_image",
-    title: "🎸 NOFXLAND — Vinilos de Segunda Mano",
-    description: "150+ LPs de segunda mano. Medellín, Colombia.",
+    title: "🎸 NOFXLAND — Vinilos de Segunda Mano en Medellín",
+    description: "LPs a precios de oferta. Punk, metal y rock. Recogida en Medellín o envíos. WhatsApp directo.",
   },
 };
 

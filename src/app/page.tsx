@@ -43,7 +43,7 @@ function AlbumCover({ record }: { record: VinylRecord }) {
 
 function VinylCard({ record }: { record: VinylRecord }) {
   const whatsappMsg = encodeURIComponent(
-    `🎸 Hey! Me interesa:\n\n*${record.band}* — ${record.album}\nPrecio: ${formatPrice(record.price)}\n\n¿Disponible?`
+    `🎸 Hey! Me interesa este vinilo:\n\n*${record.band}* — ${record.album}\nPrecio: ${formatPrice(record.price)}\n\n¿Sigue disponible? ¿Puedo recogerlo en Medellín o me lo envías?`
   );
   // Default: search YouTube by band + album (works for the vast majority).
   // For tricky titles (e.g. "A Killing Tradition - Free Wayne Henley" surfaces
@@ -171,9 +171,16 @@ export default function Home() {
           Vinilos de segunda mano — Medellín
         </p>
         <p className="text-nofx-green font-bold text-sm relative z-10">
-          {stats.available} discos
+          {stats.available} discos disponibles
         </p>
       </header>
+
+      {/* INFO BAR — trust & local conversion */}
+      <div className="bg-nofx-green text-nofx-black text-center text-[11px] sm:text-xs font-bold py-2 px-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+        <span>📍 Recogida en Medellín</span>
+        <span>📦 Envíos a toda Colombia</span>
+        <span>💬 Pregunta por WhatsApp</span>
+      </div>
 
       {/* FILTERS */}
       <section className="sticky top-0 z-50 bg-nofx-black/95 backdrop-blur px-4 py-3 border-b border-nofx-purple/50">

@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'NOFXLAND — Vinilos Punk Rock a Precio Justo';
+export const alt = 'NOFXLAND — Vinilos de Segunda Mano en Medellín, precios de oferta';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -49,14 +49,14 @@ export default async function Image() {
         {/* Subtitle */}
         <div
           style={{
-            fontSize: 32,
+            fontSize: 34,
             color: '#F5F0E8',
             fontFamily: 'Courier New, monospace',
             marginTop: 20,
-            opacity: 0.8,
+            opacity: 0.9,
           }}
         >
-          LPs DE SEGUNDA MANO — PRECIO JUSTO
+          VINILOS DE SEGUNDA MANO — PRECIOS DE OFERTA
         </div>
 
         {/* Stats */}
@@ -69,22 +69,21 @@ export default async function Image() {
             fontFamily: 'Courier New, monospace',
           }}
         >
-          <span style={{ color: '#39FF14' }}>● 150+ discos</span>
-          <span style={{ color: '#FFD700' }}>★ Punk Rock</span>
-          <span style={{ color: '#FF0033' }}>♫ Previews 30s</span>
+          <span style={{ color: '#39FF14' }}>● Punk · Metal · Rock</span>
+          <span style={{ color: '#FFD700' }}>★ NOFX, Ghost, Slipknot</span>
         </div>
 
         {/* Location */}
         <div
           style={{
-            fontSize: 22,
+            fontSize: 24,
             color: '#F5F0E8',
             fontFamily: 'Courier New, monospace',
             marginTop: 30,
-            opacity: 0.5,
+            opacity: 0.65,
           }}
         >
-          Medellín, Colombia 🇨🇴 — WhatsApp directo
+          📍 Medellín — Recogida o envíos · WhatsApp directo
         </div>
 
         {/* Bottom bar */}
